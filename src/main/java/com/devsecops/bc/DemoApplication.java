@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class DemoApplication {
 	@GetMapping("/hello")
 	public String index() {
-		return "Hello World !";
+		return "Hello World to Devsecops!";
 	}
 
 	public static void main(String[] args) {

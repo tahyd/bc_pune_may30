@@ -1,0 +1,45 @@
+pipeline {
+    
+    agent any
+    tools{
+        jdk 'jdk17'
+        maven 'maven3'
+    }
+    
+    stages{
+        
+        stage('Checkout'){
+            steps {
+                git branch:'main',url:'https://github.com/tahyd/bc_pune_may30.git'
+            }
+        }
+        
+        stage('Build package'){
+            steps{
+                sh "mvn package"
+            }
+        }
+        
+        stage('Build Docker image'){
+            steps{
+                sh "docker image build -t bcdemo ."
+            }
+        }
+        
+        stage("Clean Up"){
+            steps{
+                sh "docker rm bcdemo -f"
+            }
+        }
+        
+        stage('Run Image'){
+            steps{
+                sh 'docker container run -itd -p 8808:9988 --name bcdemo bcdemo'
+            }
+        }
+        
+        
+        
+        
+    }
+}
